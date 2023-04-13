@@ -1,0 +1,12 @@
+.object {
+    position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; background-color: red;
+}
+.text {
+    color: aliceblue;
+    text-align: center;
+    font-size: 100%;
+}
+.fullScreen {
+    width: 100%;
+    
+}
