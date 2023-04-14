@@ -1,5 +1,9 @@
 .object {
-    position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; background-color: red;
+    position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; background-image: url("./img/MicrosoftTeams-image.png");
+}
+
+body {
+    background-image: url("./img/SuperBasedBallBackGround.png");
 }
 .text {
     color: aliceblue;
@@ -7,6 +11,13 @@
     font-size: 100%;
 }
 .fullScreen {
-    width: 100%;
-    
+    width: 100%;   
+}
+.scoreboard {
+    color: aliceblue;
+}
+.enemy {
+    background-image:url("./img/standard_compressed_sz8318b2.jpg") ;
+    position: absolute;
+    left: 0px; top: 0px; width: 100px; height: 100px
 }
