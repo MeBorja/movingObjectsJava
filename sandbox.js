@@ -1,115 +1,119 @@
-let objImage = document.querySelector('.object');
-let bodyBorder = document.querySelector('.fullScreen');
-let scoreboard = document.querySelector('.scoreboard')
-let leftPosition = (window.innerWidth - 100) / 2;
-let topPosition = (window.innerHeight - 100) /2;
-let topEnemy = 0
-let leftEnemy = 0
-let speed = 10
-let score = 0
-let isInside = 0
-const bounds = {
+
+//DOM Elements
+let objImage = document.querySelector('.object'); //player
+let enemy = document.querySelector(".enemy") //enemy npc
+let scoreboard = document.querySelector('.scoreboard') //scoreboard
+
+//variabels
+let leftPosition = (window.innerWidth - 100) / 2; // player start nd current position 
+let topPosition = (window.innerHeight - 100) /2; // player start nd current position 
+let topEnemy = 0 // enemy current and start position
+let leftEnemy = 0 // enemyt current and start position
+let speed = 5// game speed
+let score = 0 //current score
+let isInside = 0 // if enemy is inside player
+const bounds = {    
   left: 0,
   top: 0,
   right: window.innerWidth - 100,
   bottom: window.innerHeight - 100
-};
+}; // bound (where player and enemy could move)
 function startRun () {
-    objImage.style.left = leftPosition + "px"
+    objImage.style.left = leftPosition + "px" 
     objImage.style.top = topPosition + "px"
-}
+} //function for starting the game ( moves player to start position)
 function moveLeft() {
     leftPosition -= speed;
     if (leftPosition < bounds.left) {
-      leftPosition = bounds.left;
-    }
+      leftPosition = bounds.left;// sets player position to bounds position  
+    } //cheacks if player is inside bounds
     objImage.style.left = leftPosition + "px";
-}
+} // moves the player left
 
 function moveUp() {
     topPosition -= speed;
     if (topPosition < bounds.top) {
-      topPosition = bounds.top;
-    }
+      topPosition = bounds.top;// sets player position to bounds position  
+    }//cheacks if player is inside bounds
     objImage.style.top = topPosition + "px";
-}
+}// moves the player up
 
 function moveRight() {
     leftPosition += speed;
     if (leftPosition > bounds.right) {
-      leftPosition = bounds.right;
-    }
+      leftPosition = bounds.right;// sets player position to bounds position  
+    }//cheacks if player is inside bounds
     objImage.style.left = leftPosition + "px";
-}
+}// moves the player right
 
 function moveDown() {
     topPosition += speed;
     if (topPosition > bounds.bottom) {
-      topPosition = bounds.bottom;
-    }
+      topPosition = bounds.bottom;// sets player position to bounds position  
+    }//cheacks if player is inside bounds
     objImage.style.top = topPosition + "px";
-}
-startRun()
-document.querySelector('body').addEventListener("keydown", function (e) {
-    let key_code = e.keyCode;
+}// moves the player down
+startRun() // runs function to set players
+document.querySelector('body').addEventListener("keydown", function (e) { //anonym functon to cheack whitch key was pressed
+    let key_code = e.keyCode; //saves key press value
     switch (key_code) {
-        case 37:
+        case 37:// key pressed left
             moveLeft();
             break;
-        case 38:
+        case 38:// key pressed up
             moveUp();
             break;
-        case 39:
+        case 39://key pressed right
             moveRight();
             break;
-        case 40:
+        case 40://key pressed down
             moveDown();
             break;
-        default:
+        default:// breakes code if up donw left right was not pressed
             break;
     }
 });
 
-let enemy = document.querySelector(".enemy")
+
 
 function enemyMoveRight() {
     leftEnemy += speed;
     if (leftEnemy > bounds.right) {
-      leftEnemy = bounds.right;
-    }
+      leftEnemy = bounds.right;// sets enemy position to bounds position  
+    }//cheacks if enemy is inside bounds
     enemy.style.left = leftEnemy + "px";
-}
+}// moves the enemy down
 
 
 
 function enemyMoveLeft() {
     leftEnemy -= speed;
     if (leftEnemy > bounds.right) {
-      leftEnemy = bounds.right;
-    }
+      leftEnemy = bounds.right;// sets enemy position to bounds position  
+    }//cheacks if enemy is inside bounds
     enemy.style.left = leftEnemy + "px";
-}
+}// moves the enemy down
 
 
 
 function enemyMoveUp() {
     topEnemy -= speed;
     if (topEnemy < bounds.top) {
-      topEnemy = bounds.top;
-    }
+      topEnemy = bounds.top;// sets enemy position to bounds position  
+    }//cheacks if enemy is inside bounds
     enemy.style.top = topEnemy + "px";
-}
+}// moves the enemy down
 function enemyMoveDown() {
     topEnemy += speed;
     if (topEnemy > bounds.bottom) {
-        topEnemy = bounds.bottom;
-      }
+        topEnemy = bounds.bottom;// sets enemy position to bounds position  
+      }//cheacks if enmy is inside bounds
     enemy.style.top = topEnemy + "px";
-}
+}// moves the enemy down
 
 function followObject() {
-    const objRect = objImage.getBoundingClientRect();
-    const enemyRect = enemy.getBoundingClientRect();
+    const objRect = objImage.getBoundingClientRect(); //get current position of player
+    const enemyRect = enemy.getBoundingClientRect();//get current position of enemy
     
     // calculate distance between objImage and enemy
     const distanceX = objRect.x - enemyRect.x;
@@ -134,25 +138,25 @@ function followObject() {
         objRect.bottom < enemyRect.top || 
         objRect.top > enemyRect.bottom
       )) {
-        isInside = 1
-        
+        isInside = 1 
+        //cheacks if enemy is inside player
     }
     else {
+      //else is not inside
         isInside = 0
     }
   }
   function addScore () {
-    if (isInside == 1) 
+    if (isInside == 1) //cheack if enemy inside player
         {
             score = score - 10
-            scoreboard.innerText = score
-    } else {
+            scoreboard.innerText = score //takes away score if enemy is inside player
+    } else { // if not player gets score
         score = score + 1
         scoreboard.innerText = score
     }
   }
   
-  // call followObject() function every 100 milliseconds
+  // call followObject() function every 1000 milliseconds to move enemy
   setTimeout(setInterval(followObject, 50), 1000)
-  setInterval(addScore, 1000)
-//   setInterval(score, 50);
+  setInterval(addScore, 1000) // turns on score counter
